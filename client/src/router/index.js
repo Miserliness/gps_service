@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Map from '../views/Map/index.vue'
+import Home from '../views/Home/index.vue'
 import Auth from '../views/Auth/index.vue'
 
 Vue.use(VueRouter)
@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    component: Map
+    component: Home
   },
   {
     path: '/auth',

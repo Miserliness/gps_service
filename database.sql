@@ -7,6 +7,7 @@ create table person(
 
 create table box(
     id SERIAL PRIMARY KEY,
+    uid VARCHAR(20),
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES person (id)
 );
@@ -14,7 +15,7 @@ create table box(
 create table coordinates(
     id SERIAL PRIMARY KEY,
     lat TEXT,
-    ing TEXT,
+    lng TEXT,
     box_id INTEGER,
     FOREIGN KEY (box_id) REFERENCES box (id)
 );
