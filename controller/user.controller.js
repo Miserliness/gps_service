@@ -1,3 +1,4 @@
+const { json } = require('express')
 const db = require('../db')
 
 class UserController {
@@ -23,7 +24,13 @@ class UserController {
     async deleteUser(req, res){
         const id = req.params.id
         const person = await db.query('DELETE * FROM person WHERE id = $1', [id])
-        res.json(person.rows[0])
+        res.json(person.rows)
+    }
+    async checkUser(req, res){
+        const log = req.query.log
+        const pas = req.query.pas
+        const person = await db.query('SELECT name FROM person WHERE login = $1 and password = $2', [log, pas])
+        res.json(person.rows)
     }
 }
 
