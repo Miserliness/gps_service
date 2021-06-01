@@ -10,7 +10,7 @@ import Feature from 'ol/Feature';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer'
 import {OSM, Vector as VectorSource} from 'ol/source'
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
-import { fromlngLat,transform } from 'ol/proj.js'
+import { fromLonLat,transform } from 'ol/proj.js'
 
 export default {
     props: ["points"],
@@ -19,14 +19,14 @@ export default {
     },
     methods: {
         initMap() {
-            const lng = Number(this.points[0].lng)
+            const lon = Number(this.points[0].lon)
             const lat = Number(this.points[0].lat)
             
             this.source = new VectorSource()
             this.vector = new VectorLayer({source: this.source})
             this.feature = new Feature({
                 geometry: new Point(
-                    fromlngLat([lng, lat]),
+                    fromLonLat([lon, lat]),
                 )
             })
             this.layer = new VectorLayer({
@@ -43,7 +43,7 @@ export default {
                     })
                 ],
                 view: new View({
-                    center: fromlngLat([this.points[0].lng, this.points[0].lat]),
+                    center: fromLonLat([this.points[0].lon, this.points[0].lat]),
                     zoom: 17
                 })
             })
@@ -68,12 +68,12 @@ export default {
             if(this.needClear) this.source.clear()
             this.source.addFeatures([featureToAdd])
         },
-        transformPoint({lng, lat}) {
-            return transform([lng, lat], 'EPSG:4326', 'EPSG:3857')
+        transformPoint({lon, lat}) {
+            return transform([lon, lat], 'EPSG:4326', 'EPSG:3857')
         },
-        setCenter({lng, lat}) {
+        setCenter({lon, lat}) {
             const view = new View({
-                center: fromlngLat([ lng, lat ]),
+                center: fromLonLat([ lon, lat ]),
                 zoom: 17
             });
             this.map.setView(view)
