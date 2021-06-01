@@ -14,9 +14,9 @@ app.use('/api', coordinatesRouter)
 app.use(express.static(path.resolve(__dirname, 'client', 'dist'))) // подключаем папки dist
 app.use(express.static(path.resolve(__dirname, 'client', 'public'))) // и папку public
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-    })
+})
 
 
 
