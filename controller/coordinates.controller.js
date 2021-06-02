@@ -11,6 +11,11 @@ class coordinatesController {
         const Coordinates = await db.query('SELECT * FROM coordinates WHERE box_id = $1', [id])
         res.json(Coordinates.rows)
     }
+    async getLastCoordByBox(req, res){
+        const id = req.query.id
+        const Coordinates = await db.query('SELECT * FROM coordinates WHERE box_id = $1 AND id=(SELECT max(id) FROM coordinates);', [id])
+        res.json(Coordinates.rows)
+    }
 }
 
 module.exports = new coordinatesController()
