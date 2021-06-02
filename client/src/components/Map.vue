@@ -9,7 +9,7 @@ import Point from 'ol/geom/Point.js'
 import Feature from 'ol/Feature';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer'
 import {OSM, Vector as VectorSource} from 'ol/source'
-import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
+import {Circle as CircleStyle, Fill, Stroke, Style, Text, Icon} from 'ol/style';
 import { fromLonLat,transform } from 'ol/proj.js'
 
 export default {
@@ -58,10 +58,9 @@ export default {
             })
             featureToAdd.set("id", id)
             const style = new Style({
-                image:  new CircleStyle({
-                    radius: 5,
-                    fill: new Fill({color: 'red'}),
-                    stroke: new Stroke({color: 'black', width: 1}),
+                image: new Icon({
+                    src: require('../assets/images/gps-icon.png'),
+                    scale: 0.05
                 })
             })
             featureToAdd.setStyle(style)

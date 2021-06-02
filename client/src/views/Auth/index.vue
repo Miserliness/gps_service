@@ -9,26 +9,43 @@
                 <label class="form__item__label">Пароль</label>
                 <input class="form__item__input" type="password" v-model="model.password"> 
             </div>
+            <div class="none-valid" v-if="valid === false">
+                Неправильные имя пользователя или пароль
+            </div>
             <button class="form__btn" @click="login">Войти</button>
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
     data() {
         return {
             model: {
                 login: '',
                 password: ''
-            }
+            },
+            valid: null,
         }
     },
     methods: {
         ...mapActions(['getUser']),
-        login() {
-            this.getUser(this.model)
+        ...mapMutations(['setUser']),
+        async login() {
+            // this.getUser(this.model)
+            const response = await fetch(`http://164.90.171.231:8080/api/check?log=${this.model.login}&pas=${this.model.password}`)
+            let json   
+            try {
+                json = await response.json()
+            }
+            catch {
+                this.valid = false
+            }
+            if (json) {
+                this.setUser(json)
+                this.$router.push('/')
+            } 
         }
     }
 }
@@ -46,6 +63,14 @@ export default {
     background-image: url('../../assets/images/auth-bg.jpeg');
     background-repeat: no-repeat;
     background-size: 100vw;
+    .none-valid {
+        color: #000000;
+        padding: 10px 20px;
+        margin-top: 20px;
+        font-size: 15px;
+        border-radius: 5px;
+        background: #fe8fff;
+    }
     .form {
         display: flex;
         align-items: center;
@@ -72,7 +97,7 @@ export default {
             }
         }
         &__btn {
-            margin-top: 50px;
+            margin-top: 30px;
             border: none;
             font-size: 24px;
             padding: 10px 40px;
